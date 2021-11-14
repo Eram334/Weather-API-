@@ -1,0 +1,148 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="container" >
+        
+    </div>
+</body> -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://kit.fontawesome.com/83dd57d420.js" crossorigin="anonymous"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            display: grid;
+            place-items: center;
+            /* yeh dono se center m aayega  yeha translate ka use bhi kr skte h yeh esay h center me lane ka */
+
+        }
+
+        .card {
+            width: 250px;
+            height: 300px;
+            /* background: gray; */
+            position: relative;
+            transform-style: preserve-3d;
+            /* preserve 3d se jab yeh rotate hoga to piche wala aage or agge wala piche chala jyega */
+            transition: all 1s;
+        }
+
+        .card:hover {
+            transform: rotateY(180deg);
+
+            /* rotate y se right to left samj skte h ap */
+        }
+
+        .front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            /* background: url("2.jpg"); */
+            background-position: center;
+            backface-visibility: hidden;
+            background-size: cover;
+        }
+
+        .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(50deg, purple, red);
+            transform: rotateY(180deg);
+            /* rotateY jo h wo right side ke traf jyega hum yaha 180 deg lahayeh take aadha right k andar chala jye...*/
+            backface-visibility: hidden;
+            text-align: justify;
+            /* justify se koi design nhi hota h simple lorem kaise likha hua ata h waise hi ek line end hone k bad dusra line whi se start hoga.... */
+            display: grid;
+            place-items: center;
+            color: white;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+
+    </div>
+
+    <script>
+        const container = document.querySelector("#container");
+        const request = new XMLHttpRequest();
+        request.open('GET', "https://restcountries.com/v3.1/name/india");
+        request.send();
+
+        //to get the response
+        request.addEventListener('load', function () {
+            //console.log(this.responseText);
+            const [data] = JSON.parse(this.responseText); // object 
+            console.log(data);
+            console.log(data.capital);
+
+            const htmlData = `
+    
+
+    <div class="card">
+      <div class="front">
+        <h1>Beautifull India</h1>
+        <img src="${data.flags.png}">
+      </div>
+      <div class="back">
+        <i class="fa fa-users" style="font-size: 50px;"></i>
+       <h5 class="card-title">${data.name.common}</h5>
+       <p class="card-text">Capital : ${data.capital}</p>
+                  <p class="card-text">Native Language : ${data.languages.eng}</p>
+                  <p class="card-text">Population : ${data.population}</p>
+                  <p class="card-text">Region : ${data.region}</p>
+                  <a href="${data.maps.openStreetMaps}">Open Street Maps </a> 
+                  <a href="SouthKorea.html">Know More</a>
+
+      </div>
+    </div>
+    `;
+
+            container.insertAdjacentHTML("afterbegin", htmlData);
+
+
+
+
+        });
+
+
+
+
+    </script>
+
+</html>
